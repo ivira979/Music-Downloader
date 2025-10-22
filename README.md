@@ -55,6 +55,6 @@ The app includes:
 ## Note
 
 - **yt-dlp**: Downloads the first YouTube search result for the song name/artist query.
-- **freyr-js**: Requires URLs from supported music services. Plain text searches are not supported. Supported services include Spotify, Apple Music, Deezer, Tidal, and more.
+- **freyr-js**: Requires URLs from supported music services. Plain text searches are not supported. Supported services include Spotify, Apple Music, Deezer, Tidal, and more. Note: freyr-js may also encounter YouTube download restrictions similar to yt-dlp.
 - Downloads are temporary and cleaned up after providing the file.
 - Ensure you have permission to download and use the content.

@@ -38,7 +38,6 @@ if st.button("Download"):
                     # freyr command to download from multiple sources
                     cmd = [
                         "freyr",
-                        "get",
                         song_name,
                         "--no-auth",
                         "--directory", temp_dir
@@ -47,16 +46,17 @@ if st.button("Download"):
                 result = subprocess.run(cmd, capture_output=True, text=True, cwd=temp_dir)
                 
                 if result.returncode == 0:
-                    # Find the downloaded file(s)
-                    mp3_files = []
+                    # Find the downloaded file(s) - check for various audio formats
+                    audio_files = []
+                    audio_extensions = ['.mp3', '.m4a', '.flac', '.wav', '.aac', '.ogg']
                     for root, dirs, files in os.walk(temp_dir):
                         for file in files:
-                            if file.endswith('.mp3'):
-                                mp3_files.append(os.path.join(root, file))
+                            if any(file.lower().endswith(ext) for ext in audio_extensions):
+                                audio_files.append(os.path.join(root, file))
                     
-                    if mp3_files:
-                        # Use the first MP3 file found
-                        file_path = mp3_files[0]
+                    if audio_files:
+                        # Use the first audio file found
+                        file_path = audio_files[0]
                         file_name = os.path.basename(file_path)
                         with open(file_path, "rb") as f:
                             audio_data = f.read()
@@ -74,7 +74,15 @@ if st.button("Download"):
                         import shutil
                         shutil.rmtree(temp_dir)
                     else:
-                        st.error("No file was downloaded. Please try a different song name.")
+                        # Debug: list all files in temp_dir
+                        all_files = []
+                        for root, dirs, files in os.walk(temp_dir):
+                            for file in files:
+                                all_files.append(os.path.join(root, file))
+                        error_msg = "No audio file found."
+                        if "403" in result.stderr or "Forbidden" in result.stderr:
+                            error_msg += " This appears to be due to YouTube blocking the download (same issue affects both methods)."
+                        st.error(f"{error_msg}\nFreyr stderr: {result.stderr[:500]}...\nAll files created: {all_files}")
                 else:
                     st.error(f"Download failed: {result.stderr}")
                     
