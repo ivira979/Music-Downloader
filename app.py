@@ -50,8 +50,7 @@ if st.button("🚀 Start Download", type="primary"):
                     "freyr",
                     "--no-auth",
                     "--bitrate", bitrate,
-                    "--chunks", str(concurrent_downloads),
-                    "--yes"  # Non-interactive mode
+                    "--chunks", str(concurrent_downloads)
                 ] + urls
 
                 # Show command being executed
