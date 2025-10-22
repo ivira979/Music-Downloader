@@ -34,10 +34,10 @@ streamlit run app.py
 ```
 
 Open the provided URL in your browser. Select your preferred download method:
-- **yt-dlp (YouTube)**: Downloads from YouTube search results
-- **freyr-js (Multiple sources)**: Downloads from various music services (Spotify, Apple Music, etc.)
+- **yt-dlp (YouTube)**: Enter a song name/artist for YouTube search and download
+- **freyr-js (Multiple sources)**: Enter a URL from supported music services (Spotify, Apple Music, Deezer, Tidal, etc.) for high-quality downloads
 
-Enter a song name and artist, then click "Download". Once the download is ready, click the "Download Song" button to save the MP3 file.
+Then click "Download". Once the download is ready, click the "Download Song" button to save the MP3 file.
 
 ## Deployment on Streamlit Community Cloud
 
@@ -54,7 +54,7 @@ The app includes:
 
 ## Note
 
-- **yt-dlp**: Downloads the first YouTube search result for the song name.
-- **freyr-js**: Supports multiple music services. For best results, you may need to provide URLs from supported services, though queries should work for basic searches.
+- **yt-dlp**: Downloads the first YouTube search result for the song name/artist query.
+- **freyr-js**: Requires URLs from supported music services. Plain text searches are not supported. Supported services include Spotify, Apple Music, Deezer, Tidal, and more.
 - Downloads are temporary and cleaned up after providing the file.
 - Ensure you have permission to download and use the content.

@@ -7,7 +7,10 @@ st.title("Music Downloader")
 
 download_method = st.selectbox("Choose download method:", ["yt-dlp (YouTube)", "freyr-js (Multiple sources)"])
 
-song_name = st.text_input("Enter song name and artist:")
+if download_method == "freyr-js (Multiple sources)":
+    st.info("💡 For freyr-js, please provide a URL from supported music services (Spotify, Apple Music, Deezer, etc.)")
+    
+song_name = st.text_input("Enter song name/artist (yt-dlp) or URL (freyr-js):")
 
 if st.button("Download"):
     if song_name:
@@ -35,9 +38,10 @@ if st.button("Download"):
                     # freyr command to download from multiple sources
                     cmd = [
                         "freyr",
+                        "get",
                         song_name,
                         "--no-auth",
-                        "--output-dir", temp_dir
+                        "--directory", temp_dir
                     ]
                 
                 result = subprocess.run(cmd, capture_output=True, text=True, cwd=temp_dir)
