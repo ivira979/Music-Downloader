@@ -1,67 +1,130 @@
-# 🎵 Freyr Music Downloader# Music Downloader
+# 🎵 Freyr Music Downloader# 🎵 Freyr Music Downloader# Music Downloader
 
 
 
-A Streamlit web interface for [freyr-js](https://github.com/miraclx/freyr-js), inspired by [freyr-gui](https://github.com/miraclx/freyr-gui).A Streamlit-based application that allows users to download music by entering a song name. The app searches YouTube for the song and downloads the audio as MP3.
+A Streamlit web interface for [freyr-js](https://github.com/miraclx/freyr-js), inspired by [freyr-gui](https://github.com/miraclx/freyr-gui).
 
 
 
-Download high-quality music from Spotify, Apple Music, Deezer, Tidal, and other supported services.## Requirements
+Download high-quality music from Spotify, Apple Music, Deezer, Tidal, and other supported services.A Streamlit web interface for [freyr-js](https://github.com/miraclx/freyr-js), inspired by [freyr-gui](https://github.com/miraclx/freyr-gui).A Streamlit-based application that allows users to download music by entering a song name. The app searches YouTube for the song and downloads the audio as MP3.
 
 
 
-## Features- Python 3.7+
+## Features
 
-- ffmpeg (for audio extraction)
 
-- 🎯 **Multiple Service Support**: Spotify, Apple Music, Deezer, Tidal, YouTube Music, and more- Node.js and npm (for freyr-js support)
+
+- 🎯 **Multiple Service Support**: Spotify, Apple Music, Deezer, Tidal, YouTube Music, and moreDownload high-quality music from Spotify, Apple Music, Deezer, Tidal, and other supported services.## Requirements
 
 - 🎵 **High-Quality Audio**: Choose bitrate from 96k to 320k
 
-- ⚡ **Concurrent Downloads**: Control the number of simultaneous downloads## Installation
+- ⚡ **Concurrent Downloads**: Control the number of simultaneous downloads
 
 - 📊 **Real-time Progress**: Live progress updates and command output
 
-- 💾 **Direct Download**: Download files directly from your browser1. Clone or download this repository.
+- 💾 **Direct Download**: Download files directly from your browser## Features- Python 3.7+
 
-2. Install Python dependencies:
 
-## Installation   ```
 
-   pip install -r requirements.txt
+## Installation- ffmpeg (for audio extraction)
 
-1. Install Python dependencies:   ```
+
+
+1. Install Python dependencies:- 🎯 **Multiple Service Support**: Spotify, Apple Music, Deezer, Tidal, YouTube Music, and more- Node.js and npm (for freyr-js support)
+
+   ```bash
+
+   pip install -r requirements.txt- 🎵 **High-Quality Audio**: Choose bitrate from 96k to 320k
+
+   ```
+
+- ⚡ **Concurrent Downloads**: Control the number of simultaneous downloads## Installation
+
+2. Install Node.js from [nodejs.org](https://nodejs.org/)
+
+- 📊 **Real-time Progress**: Live progress updates and command output
+
+3. Install freyr-js globally:
+
+   ```bash- 💾 **Direct Download**: Download files directly from your browser1. Clone or download this repository.
+
+   npm install -g freyr
+
+   ```2. Install Python dependencies:
+
+
+
+## Usage## Installation   ```
+
+
+
+Run the Streamlit app:   pip install -r requirements.txt
+
+```bash
+
+streamlit run app.py1. Install Python dependencies:   ```
+
+```
 
    ```bash3. Install system dependencies:
 
-   pip install -r requirements.txt   - ffmpeg:
+1. **Enter URLs**: Paste music URLs (one per line) from supported services
 
-   ```     - On macOS: `brew install ffmpeg`
+2. **Configure Options**:   pip install -r requirements.txt   - ffmpeg:
 
-     - On Ubuntu/Debian: `sudo apt install ffmpeg`
+   - Choose audio quality (bitrate)
+
+   - Set concurrent download limit   ```     - On macOS: `brew install ffmpeg`
+
+3. **Start Download**: Click the download button
+
+4. **Monitor Progress**: Watch real-time progress and output     - On Ubuntu/Debian: `sudo apt install ffmpeg`
+
+5. **Download Files**: Click download buttons for each completed track
 
 2. Install Node.js from [nodejs.org](https://nodejs.org/)     - On Windows: Download from https://ffmpeg.org/download.html
 
+## Supported Services
+
    - Node.js: Download from https://nodejs.org/
 
-3. Install freyr-js globally:4. Install freyr-js globally:
+- **Spotify**: No authentication required
 
-   ```bash   ```
+- **Apple Music**: May require authentication (experimental support)3. Install freyr-js globally:4. Install freyr-js globally:
 
-   npm install -g freyr   npm install -g freyr
+- **Deezer**: No authentication required
+
+- **Tidal**: May require authentication   ```bash   ```
+
+- **YouTube Music**: No authentication required
+
+- **SoundCloud**: No authentication required   npm install -g freyr   npm install -g freyr
+
+- And many more...
 
    ```   ```
 
+## Authentication
 
 
-## Usage## Usage
+
+Some services require authentication:
+
+- **Apple Music**: Currently experimental in freyr-js## Usage## Usage
+
+- **Tidal**: Requires account credentials
 
 
+
+For services that require authentication, freyr-js may prompt for login credentials or use stored credentials.
 
 Run the Streamlit app:Run the Streamlit app:
 
+## Note
+
 ```bash```
 
+Some services may have download restrictions. Make sure you have permission to download the content you're accessing.
 streamlit run app.pystreamlit run app.py
 
 ``````

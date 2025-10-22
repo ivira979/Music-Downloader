@@ -7,6 +7,14 @@ import shutil
 st.title("🎵 Freyr Music Downloader")
 st.markdown("Download music from Spotify, Apple Music, Deezer, and more using freyr-js")
 
+# Service authentication info
+st.info("ℹ️ **Authentication Notes:**\n"
+        "- Spotify: No authentication required\n"
+        "- Apple Music: May require authentication (experimental)\n"
+        "- Deezer: No authentication required\n"
+        "- Tidal: May require authentication\n"
+        "- YouTube Music: No authentication required")
+
 # URL input
 url_input = st.text_area(
     "Enter music URLs (one per line)",
