@@ -4,67 +4,81 @@ import os
 import tempfile
 import shutil
 
-st.title("🎵 Freyr Music Downloader")
-st.markdown("Download music from Spotify, Apple Music, Deezer, and more using freyr-js")
+st.title("🎵 Music Downloader")
+st.markdown("Download music from YouTube, Spotify, Apple Music, Deezer, and more")
 
-# Service authentication info
-st.info("ℹ️ **Authentication Notes:**\n"
-        "- Spotify: No authentication required\n"
-        "- Apple Music: May require authentication (experimental)\n"
-        "- Deezer: No authentication required\n"
-        "- Tidal: May require authentication\n"
-        "- YouTube Music: No authentication required")
+# Service info
+st.info("💡 **Supported Sources:**\n"
+        "- YouTube URLs\n"
+        "- YouTube search terms\n"
+        "- Other music service URLs (may have limitations)")
 
-# URL input
-url_input = st.text_area(
-    "Enter music URLs (one per line)",
-    placeholder="https://open.spotify.com/track/...\nhttps://music.apple.com/...",
-    help="Paste URLs from Spotify, Apple Music, Deezer, Tidal, or other supported services"
+# Input method selection
+input_method = st.radio(
+    "Choose input method:",
+    ["YouTube URL", "Search term", "Music service URL"],
+    horizontal=True
 )
+
+# Input field
+if input_method == "YouTube URL":
+    user_input = st.text_input("Enter YouTube URL:", placeholder="https://www.youtube.com/watch?v=...")
+elif input_method == "Search term":
+    user_input = st.text_input("Enter song/artist name:", placeholder="Never Gonna Give You Up")
+else:  # Music service URL
+    user_input = st.text_input("Enter music service URL:", placeholder="https://open.spotify.com/track/...")
+    st.warning("⚠️ Music service URLs may not work due to download restrictions")
 
 # Download options
 col1, col2 = st.columns(2)
 with col1:
-    bitrate = st.selectbox(
-        "Audio Quality",
-        ["320k", "256k", "192k", "160k", "128k", "96k"],
+    audio_format = st.selectbox(
+        "Audio Format",
+        ["mp3", "m4a", "flac", "wav"],
         index=0,
-        help="Higher quality = larger file size"
+        help="MP3 is most compatible, FLAC is highest quality"
     )
 
 with col2:
-    concurrent_downloads = st.slider(
-        "Concurrent Downloads",
-        min_value=1,
-        max_value=10,
-        value=3,
-        help="Number of simultaneous downloads"
+    audio_quality = st.selectbox(
+        "Audio Quality",
+        ["128k", "192k", "256k", "320k"],
+        index=3,
+        help="Higher quality = larger file size"
     )
 
 # Download button
 if st.button("🚀 Start Download", type="primary"):
-    if not url_input.strip():
-        st.error("Please enter at least one URL")
+    if not user_input.strip():
+        st.error("Please enter a URL or search term")
     else:
-        urls = [url.strip() for url in url_input.split('\n') if url.strip()]
-
-        with st.spinner("Initializing download..."):
+        with st.spinner("Searching and downloading..."):
             try:
                 # Create temp directory
                 temp_dir = tempfile.mkdtemp()
 
-                # Prepare freyr command
+                # Prepare yt-dlp command
+                if input_method == "Search term":
+                    # Search YouTube
+                    query = f"ytsearch1:{user_input}"
+                else:
+                    # Direct URL
+                    query = user_input
+
                 cmd = [
-                    "freyr",
-                    "--no-auth",
-                    "--bitrate", bitrate,
-                    "--chunks", str(concurrent_downloads)
-                ] + urls
+                    "yt-dlp",
+                    "-x",  # Extract audio
+                    "--audio-format", audio_format,
+                    "--audio-quality", audio_quality,
+                    "--user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+                    "--referer", "https://www.youtube.com/",
+                    "--no-check-certificates",
+                    "--extractor-args", "youtube:player_client=android",
+                    "-o", f"{temp_dir}/%(title)s.%(ext)s",
+                    query
+                ]
 
-                # Show command being executed
-                st.code(" ".join(cmd), language="bash")
-
-                # Execute freyr
+                # Execute yt-dlp
                 process = subprocess.Popen(
                     cmd,
                     cwd=temp_dir,
@@ -133,7 +147,7 @@ if st.button("🚀 Start Download", type="primary"):
                         shutil.rmtree(temp_dir)
                     else:
                         st.error("❌ No audio files were created. Check the output above for errors.")
-                        st.info("This might be due to service restrictions or invalid URLs.")
+                        st.info("This might be due to URL issues or service restrictions.")
                 else:
                     st.error(f"❌ Download failed with return code {return_code}")
                     st.code('\n'.join(output_lines[-20:]), language="text")
@@ -144,13 +158,14 @@ if st.button("🚀 Start Download", type="primary"):
 # Footer
 st.markdown("---")
 st.markdown("""
-**Supported Services:**
-- Spotify
-- Apple Music
-- Deezer
-- Tidal
-- YouTube Music
-- And more...
+**Supported Input Methods:**
+- **YouTube URL**: Direct video URLs (most reliable)
+- **Search term**: Song/artist name (searches YouTube)
+- **Music service URL**: Spotify, Apple Music, etc. (may not work)
 
-**Note:** Some services may have download restrictions. Make sure you have permission to download the content.
+**Audio Formats:**
+- MP3: Most compatible
+- M4A: Good quality, smaller files
+- FLAC: Lossless quality
+- WAV: Uncompressed
 """)
