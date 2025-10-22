@@ -28,6 +28,19 @@ streamlit run app.py
 
 Open the provided URL in your browser, enter a song name, and click "Download". Once the download is ready, click the "Download Song" button to save the MP3 file.
 
+## Deployment on Streamlit Community Cloud
+
+1. Push this repository to GitHub.
+2. Go to [share.streamlit.io](https://share.streamlit.io)
+3. Connect your GitHub account and select this repository.
+4. Set the main file path to `app.py`
+5. Click Deploy.
+
+The app includes:
+- `requirements.txt`: Python dependencies
+- `packages.txt`: System dependencies (ffmpeg)
+- `runtime.txt`: Python version specification
+
 ## Note
 
 - The app downloads the first YouTube search result for the song name.
